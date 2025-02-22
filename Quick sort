@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int partition(int arr[], int start, int end)
+{
+    int index = start - 1;
+    int pivot = arr[end];
+    for (int j = start; j < end; j++)
+    {
+        if (arr[j] <= pivot)
+        {
+            index++;
+            swap(arr[j], arr[index]);
+        }
+    }
+    index++;
+    swap(arr[end], arr[index]);
+    return index;
+}
+
+void quick_sort(int arr[], int start, int end)
+{
+    if (start < end)
+    {
+        int pivot_index = partition(arr, start, end);
+        quick_sort(arr, start, pivot_index - 1);
+        quick_sort(arr, pivot_index + 1, end);
+    }
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    int arr[n];
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    int start = 0;
+    int end = n - 1;
+    quick_sort(arr, start, end);
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    return 0;
+}
