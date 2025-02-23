@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int bin_srch_recursion(vector<int> &arr, int target, int start, int end)
+{
+    if (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+        if (target > arr[mid])
+        {
+            return bin_srch_recursion(arr, target, mid + 1, end);
+        }
+        else if (target < arr[mid])
+        {
+            return bin_srch_recursion(arr, target, start, mid - 1);
+        }
+        else
+            return mid;
+    }
+    return -1;
+}
+int main()
+{
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+
+    int target;
+    cin >> target;
+
+    // Binary search works on sorted arrays, so sort it first
+    sort(arr.begin(), arr.end());
+
+    int index = bin_srch_recursion(arr, target, 0, arr.size() - 1);
+    if (index != -1)
+    {
+        cout << "Element found at index: " << index << endl;
+    }
+    else
+    {
+        cout << "Element not found" << endl;
+    }
+
+    return 0;
+}
