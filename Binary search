@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int binary_search(vector<int> &arr, int target)
+{
+    int start = 0, end = arr.size() - 1;
+    while (start <= end)
+    {
+        int mid = start + (end - start) / 2;
+        if (target < arr[mid])
+        {
+            end = mid - 1; // 1st part
+        }
+        else if (target > arr[mid])
+        {
+            start = mid + 1; // 2nd part
+        }
+        else
+            return mid; // Target found, return index
+    }
+    return -1; // Target not found
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+
+    int target;
+    cin >> target;
+
+    // Binary search works on sorted arrays, so sort it first
+    sort(arr.begin(), arr.end());
+
+    int index = binary_search(arr, target);
+    if (index != -1)
+    {
+        cout << "Element found at index: " << index << endl;
+    }
+    else
+    {
+        cout << "Element not found" << endl;
+    }
+
+    return 0;
+}
