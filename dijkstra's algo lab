@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<pair<int, int>> adjList[100];
+
+vector<int>dijkastras(int s, vector<pair<int, int>> adjList[], int nod )
+{
+    vector<int> dist( nod+1, INT_MAX);
+    dist[s]=0;
+    priority_queue<pair<int,int>, vector<pair<int,int>>,greater< pair<int,int>>> pq;
+    pq.push({0,s});
+
+    while(!pq.empty())
+    {
+        int weight = pq.top().first;
+        int node = pq.top().second;
+        pq.pop();
+
+        for( auto edge : adjList[node])
+        {
+            int nextnode = edge.first;
+            int weight = edge.second;
+            if ( dist[node] + weight <dist[nextnode])
+            {
+                dist[nextnode]=dist[node] + weight;
+                pq.push({dist[nextnode], nextnode});
+            }
+        }
+    }
+    return dist;
+}
+
+int main()
+{
+    int edge, node;
+    cout << "enter the number of nodes";
+    cin >> node;
+    cout << "enter the nuber of edges :";
+    cin >> edge;
+
+    for (int i = 0; i < edge; i++)
+    {
+        int n1, n2, weight;
+        cout << "enter edge ( n1 n2 weight)";
+        cin >> n1 >> n2 >> weight;
+
+        adjList[n1].push_back({n2, weight});
+
+        adjList[n2].push_back({n1, weight});
+    }
+    int source;
+    cout<<"enter the starting node :";
+    cin>>source;
+    vector<int> result = dijkastras(source,adjList ,node);
+    cout<<"shortest dist for "<< source<<" :"<<endl;
+    for ( int i=0; i<node; i++)
+
+    {
+        cout<<"node"<<i<<"-> distance "<<result[i]<<endl;
+    }
+
+}
