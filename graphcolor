@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool  isvalid(vector<int> adj[],int c, vector <int> & color, int v)
+{
+    for (int i: adj[v])
+    {
+        if ( color[i]==c)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool graphcolor(vector<int> adj[],vector<int> color, int p,int node, int n)
+{
+    if(node>n)
+    {return true;}
+    for( int c=1l;c<p;c++){
+        if( isvalid(adj,c,color,node)){
+            color[node]=c;
+            if (graphcolor(adj,color,p,node=1,n)) {
+                return true;
+            }
+            color[node]=0;
+        }
+    }
+    return false;
+}
+
+int main(){
+    int n,m,p;
+    cout<<"enter number if node, edge and color";
+    cin>>n>>m>>p;
+    vector<int> adj[n+1];
+    vector<int> color(n+1,0);
+    for(int i=0; i<n;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+
+    }
+    if (graphcolor(adj,color,p,1,n)){
+        cout<<"graph can be colored with "<< p<<"colors :"<<endl;
+        for ( int i= 1; i<=n; i++)
+        {
+            cout<< "vertex"<<i <<"color "<< color[i]<<endl;
+
+        }
+    }
+    else{
+        cout<<"Graph can't be colored"<<endl;
+    }
+return 0;
+}
